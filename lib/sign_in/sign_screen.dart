@@ -58,9 +58,10 @@ class SignInScreen extends StatelessWidget {
             SizedBox(height: 40,),
             BlocBuilder<SignInBloc, SignInStates>(
               builder: (context, state) {
+                print('button state: $state');
                 return Container(
                   width: MediaQuery.of(context).size.width,
-                  color: (state is SignInValidState || state is SignInLoadingState) ? Colors.green : Colors.grey,
+                  color: (state is SignInValidState && state is !SignInErrorState) ? Colors.green : Colors.grey,
                   child: CupertinoButton(
                       child: (state is SignInLoadingState)
                     ? const Center(
@@ -69,7 +70,10 @@ class SignInScreen extends StatelessWidget {
                       : const Text('Sign in',
                         style: TextStyle(color: Colors.white),),
                       onPressed: (){
-                        BlocProvider.of<SignInBloc>(context).add(SignInSubmittedEvent(emailController.text, passwordController.text));
+                        if(state is SignInValidState){
+                          print('button pressed: ${emailController.text} ,, ${passwordController.text}');
+                          BlocProvider.of<SignInBloc>(context).add(SignInSubmittedEvent(emailController.text, passwordController.text));
+                        }
                       }),
                 );
               }

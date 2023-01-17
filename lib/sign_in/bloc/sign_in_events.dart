@@ -13,7 +13,7 @@ class SignInPasswordTextEvent extends SignInEvent{
   SignInPasswordTextEvent(this.passwordValue);
 }
 
-class SignInSubmittedEvent extends SignInEvent{
+class SignInSubmittedEvent extends SignInEvent {
   final String email;
   final String password;
   SignInSubmittedEvent(this.email, this.password);
